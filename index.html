@@ -9,7 +9,18 @@
 </head>
 <body style="touch-action: none;">
     <div class="aviso">
-        <h1 style="text-align: center;">Não é compatível com esse dispositivo ou resolução de tela.</h1>
+        <!-- <h1 style="text-align: center;">Não é compatível com esse dispositivo ou resolução de tela.</h1> -->
+        <canvas id="tela" width="300" height="400"></canvas>
+        <div class="colorArea" style="height:55px;width:300px;display:flex; flex:1;flex-direction: row;">
+            <div data-color="black" style="background-color: black" class="color active"></div>
+            <div data-color="blue" style="background-color: blue" class="color"></div>
+            <div data-color="red" style="background-color: red" class="color"></div>
+            <div data-color="green" style="background-color: green" class="color"></div>
+            <div data-color="yellow" style="background-color: yellow" class="color"></div>
+            <div data-color="gray" style="background-color: gray" class="color"></div>
+        </div>
+        
+        <button class="clear">Limpar Quadro</button>
     </div>
     <div class="principal">
 
