@@ -19,12 +19,14 @@ screen.addEventListener('mousedown',mouseDownEvent);
 screen.addEventListener('mousemove',mouseMoveEvent);
 screen.addEventListener('mouseup',mouseUpEvent);
 
-// screen.addEventListener('touchstart',mouseDownEvent);
-// screen.addEventListener('touchmove',mouseMoveEvent);
-// screen.addEventListener('touchend',mouseUpEvent);
+screen.addEventListener('touchstart', touchStartEvent);
+screen.addEventListener('touchmove', touchMoveEvent);
+screen.addEventListener('touchend', touchEndEvent);
 
 document.querySelector('.clear').addEventListener('click',clearScreen)
+
 //functions
+
 function colorClickEvent(e){
     let color = e.target.getAttribute('data-color');
     currentColor = color;
@@ -36,12 +38,11 @@ function mouseDownEvent(e){
     canDraw = true;
     mouseX = e.pageX - screen.offsetLeft;
     mouseY = e.pageY - screen.offsetTop;
-    
 }
 
 function mouseMoveEvent(e){
     if(canDraw){
-        draw(e.pageX, e.pageY);
+        draw(e.pageX - screen.offsetLeft, e.pageY - screen.offsetTop);
     }
 }
 
@@ -49,21 +50,34 @@ function mouseUpEvent(){
     canDraw = false;
 }
 
-function draw(x,y){
-    let pointX = x - screen.offsetLeft;
-    let pointY = y - screen.offsetTop;
+function touchStartEvent(e){
+    canDraw = true;
+    mouseX = e.touches[0].pageX - screen.offsetLeft;
+    mouseY = e.touches[0].pageY - screen.offsetTop;
+}
 
+function touchMoveEvent(e){
+    if(canDraw){
+        draw(e.touches[0].pageX - screen.offsetLeft, e.touches[0].pageY - screen.offsetTop);
+    }
+}
+
+function touchEndEvent(){
+    canDraw = false;
+}
+
+function draw(x,y){
     ctx.beginPath();
     ctx.lineWidth = 5;
     ctx.lineJoin = "round";
     ctx.moveTo(mouseX, mouseY);
-    ctx.lineTo(pointX, pointY);
+    ctx.lineTo(x, y);
     ctx.closePath();
     ctx.strokeStyle = currentColor;
     ctx.stroke();
 
-    mouseX = pointX;
-    mouseY = pointY;
+    mouseX = x;
+    mouseY = y;
 }
 
 function clearScreen(){
